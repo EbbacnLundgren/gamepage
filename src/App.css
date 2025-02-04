@@ -1,0 +1,112 @@
+body {
+  background-color: #f8b1ff;
+  font-family:'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 15px; 
+  margin-top: 20px;
+}
+
+.button-container button {
+  padding: 12px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  width: 250px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: #a8c6fd;
+  color: white;
+  transform: scale(1.05);
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dog-button {
+  padding: 12px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  width: 200px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 2px solid black;
+}
+
+.dog-button:hover {
+  background-color: lightgray;
+}
+
+.correct {
+  background-color: green !important;
+  color: white;
+}
+
+.wrong {
+  background-color: red !important;
+  color: white;
+}
+
+.doneplaying {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+  
+.rounds {
+  font-size: 1.2rem;
+  font-weight: bold;
+
+}
+
+.back-button {
+  margin-top: 20px; /* Space above */
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+  
+  transform: scale(1.05); 
+}
+
+.back-button:active {
+  transform: scale(0.95);
+}
+
+.dog-button:active {
+  transform: scale(0.95);
+}
+  
+
+
+
