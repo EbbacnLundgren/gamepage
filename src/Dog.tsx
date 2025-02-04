@@ -15,6 +15,8 @@ const Dog: React.FC = () => {
   const [gameOver, setGameOver] = useState(false);
   const [allBreeds, setAllBreeds] = useState<Record<string, string[]>>({});
   const [showCorrect, setShowCorrect] = useState(false);
+  const [shake, setShake] = useState<string | null>(null);
+  const [shakeKey, setShakeKey] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,30 +69,30 @@ const Dog: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
     const handleGuess = (selectedBreed: string) => {
-    setSelectedOption(selectedBreed); 
+      console.log("handleGuess called with:", selectedBreed);
+      setSelectedOption(selectedBreed); 
 
-    if (selectedBreed === dogs[currentRound].breed) {
-      setScore(score + 1);
-    } else {
-      setShowCorrect(true);
-    }
-
-    console.log("Selected option:", selectedBreed);
-    console.log("Correct breed:", dogs[currentRound].breed);
-    console.log("Show correct:", showCorrect);
-
-    setTimeout(() => {
-      if (currentRound < 9) {
-        const nextRound = currentRound + 1;
-        setCurrentRound(nextRound);
-        generateOptions(dogs, nextRound, allBreeds);
-        setSelectedOption(null);
-        setShowCorrect(false);
+      if (selectedBreed === dogs[currentRound].breed) {
+        setScore(score + 1);
       } else {
-        setGameOver(true);
+        setShowCorrect(true);
+        setShake(selectedBreed);
+        setShakeKey(prevKey => prevKey + 1);  
+        setTimeout(() => { setShake(null), 500});
       }
-    }, 2000); 
-  };
+
+      setTimeout(() => {
+        if (currentRound < 9) {
+          const nextRound = currentRound + 1;
+          setCurrentRound(nextRound);
+          generateOptions(dogs, nextRound, allBreeds);
+          setSelectedOption(null);
+          setShowCorrect(false);
+        } else {
+          setGameOver(true);
+        }
+      }, 2000); 
+    };
 
   const restartGame = () => {
     setDogs([]);
@@ -143,7 +145,7 @@ const Dog: React.FC = () => {
                             : "wrong"
                           : showCorrect && breed === dogs[currentRound].breed
                             ? "correct"
-                          : ""}`}
+                          : ""} ${shake === breed ? "shake" : ""}`}
                     >
                     {breed}
                 </button>
@@ -172,7 +174,6 @@ const Dog: React.FC = () => {
 
 export default Dog;
 
-//visa alternativ som liknar varandra, eller börjar på samma bokstav
+
 //inte så många alternativ, samt ändra färg på den knapp man trycker, timer, vissa box terrier istället för terrier box
 //att bilden alltid stannar där den är och att den inte flyttar sig bara för att bilden är liten
-//När man väljer fel --> visa grönt vilken som va den rätta eller ha som facit efter

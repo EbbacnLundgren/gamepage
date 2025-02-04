@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Game from "./Game";
 import Dog from "./Dog";
 import './App.css';
@@ -23,12 +23,29 @@ const Home: React.FC = () => {
 };
 
 const App: React.FC = () => {
+
+  const location = useLocation();
+
+  const getPageClass = () => {
+    if (location.pathname === '/') {
+      return 'front-page';
+    } else if (location.pathname === '/game') {
+      return 'game-page';
+    } else if (location.pathname === '/dog') {
+      return 'dog-page';
+    } else {
+      return '';
+    }
+  };
+  
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/game" element={<Game />} />
-      <Route path="/dog" element={<Dog />} />
-    </Routes>
+    <div id="root" className={getPageClass()}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/game" element={<Game />} />
+        <Route path="/dog" element={<Dog />} />
+      </Routes>
+      </div>
   );
 };
 
