@@ -34,15 +34,13 @@ const Dog: React.FC = () => {
     const [mainBreed] = correctBreed.split("-");
     let similarBreeds: string[] = [];
   
-    // Find similar breeds
     for (const breed in breeds) {
       if (breed.includes(mainBreed) && breed !== correctBreed) {
         similarBreeds.push(breed);
       }
     }
   
-    // If not enough similar breeds, find breeds starting with the same letter
-    if (similarBreeds.length < 3) {
+    if (similarBreeds.length < 2) {
       const firstLetter = mainBreed.charAt(0);
       for (const breed in breeds) {
         if (breed.startsWith(firstLetter) && breed !== correctBreed && !similarBreeds.includes(breed)) {
@@ -51,15 +49,15 @@ const Dog: React.FC = () => {
       }
     }
   
-    // Ensure we have exactly 3 options
-    while (similarBreeds.length > 3) {
+
+    while (similarBreeds.length > 2) {
       similarBreeds.pop();
     }
   
-    // Add the correct breed to the options
+
     similarBreeds.push(correctBreed);
   
-    // Shuffle the options
+
     similarBreeds = similarBreeds.sort(() => Math.random() - 0.5);
   
     setOptions(similarBreeds);
@@ -125,9 +123,9 @@ const Dog: React.FC = () => {
           />
           
           <div className="button-container">
-                {options.map((breed) => (
+                {options.map((breed, index) => (
                     <button 
-                    key={breed} 
+                    key={index} 
                     onClick={() => handleGuess(breed)}
                     className={`dog-button 
                         ${selectedOption === breed 

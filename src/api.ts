@@ -1,35 +1,31 @@
-import axios from "axios";
-import Dog from "./Dog";
 
-const DOG_API_URL = "https://dog.ceo/api/breeds/image/random";
-
-
-export const fetchMultipleDogs = async (count: number = 10): Promise<Dog[]> => {
-    try {
-      const dogPromises = Array.from({ length: count }, async () => {
-        const response = await axios.get<{ message: string; status: string }>(DOG_API_URL);
-        const imageUrl = response.data.message;
-        const breed = imageUrl.split("/")[4].replace("-", " "); 
-  
-        return { imageUrl, breed };
-      });
-  
-      return Promise.all(dogPromises);
-    } catch (error) {
-      console.error("Error fetching dog images:", error);
-      return [];
+export const fetchAllBreeds = async () => {
+  try {
+    const response = await fetch('https://dog.ceo/api/breeds/list/all');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  };
+    const data = await response.json();
+    return data.message;
+  } catch (error) {
+    console.error('Error fetching all breeds:', error);
+    return {};
+  }
+};
 
-export const fetchAllBreeds = async (): Promise<Record<string, string[]>> => {
-    try {
-        const response = await axios.get<{ message: Record<string, string[]>; status: string}>(
-            `${DOG_API_URL}/breeds/list/all`
-        );
-        return response.data.message;
-    } catch (error) {
-        console.error("error");
-        return {};
+export const fetchMultipleDogs = async (count: number) => {
+  try {
+    const response = await fetch(`https://dog.ceo/api/breeds/image/random/${count}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-
+    const data = await response.json();
+    return data.message.map((url: string) => {
+      const breed = url.split('/')[4];
+      return { imageUrl: url, breed };
+    });
+  } catch (error) {
+    console.error('Error fetching multiple dogs:', error);
+    return [];
+  }
 };
