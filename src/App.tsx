@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
-import {fetchMultipleDogs} from "./api";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+
+import { BrowserRouter as Routes, Route, useNavigate } from "react-router-dom";
 import Game from "./Game";
 import Dog from "./Dog";
 

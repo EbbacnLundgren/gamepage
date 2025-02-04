@@ -3,10 +3,6 @@ import Dog from "./Dog";
 
 const DOG_API_URL = "https://dog.ceo/api/breeds/image/random";
 
-type DogResponse = {
-    imageUrl: string;
-    breed: string;
-}
 
 export const fetchMultipleDogs = async (count: number = 10): Promise<Dog[]> => {
     try {
