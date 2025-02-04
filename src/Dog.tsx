@@ -14,6 +14,7 @@ const Dog: React.FC = () => {
   const [options, setOptions] = useState<string[]>([]);
   const [gameOver, setGameOver] = useState(false);
   const [allBreeds, setAllBreeds] = useState<Record<string, string[]>>({});
+  const [showCorrect, setShowCorrect] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,19 +70,27 @@ const Dog: React.FC = () => {
     setSelectedOption(selectedBreed); 
 
     if (selectedBreed === dogs[currentRound].breed) {
-        setScore(score + 1);
+      setScore(score + 1);
+    } else {
+      setShowCorrect(true);
     }
 
+    console.log("Selected option:", selectedBreed);
+    console.log("Correct breed:", dogs[currentRound].breed);
+    console.log("Show correct:", showCorrect);
+
     setTimeout(() => {
-        setSelectedOption(null); 
-        if (currentRound < 9) {
-        setCurrentRound(currentRound + 1);
-        generateOptions(dogs, currentRound + 1, allBreeds);
-        } else {
+      if (currentRound < 9) {
+        const nextRound = currentRound + 1;
+        setCurrentRound(nextRound);
+        generateOptions(dogs, nextRound, allBreeds);
+        setSelectedOption(null);
+        setShowCorrect(false);
+      } else {
         setGameOver(true);
-        }
-    }, 1000); // Delay before next round
-    };
+      }
+    }, 2000); 
+  };
 
   const restartGame = () => {
     setDogs([]);
@@ -100,7 +109,7 @@ const Dog: React.FC = () => {
     if (score <= 3) {
         return "Practice more for next time!🐾";
     } else if (score <=6) {
-        return "Good work!🎉"
+        return "Good work champ!🎉"
     } else {
         return "Well done! You are a dog expert!🐶";
     }
@@ -132,7 +141,9 @@ const Dog: React.FC = () => {
                         ? breed === dogs[currentRound].breed 
                             ? "correct" 
                             : "wrong"
-                        : ""}`}
+                          : showCorrect && breed === dogs[currentRound].breed
+                            ? "correct"
+                          : ""}`}
                     >
                     {breed}
                 </button>
@@ -149,8 +160,10 @@ const Dog: React.FC = () => {
             <h1>Thanks for playing!</h1>
           <p>You got {score} out of 10!</p>
           <p>{getFeedbackMessage(score)}</p>
-          <button onClick={restartGame}>Play Again style</button>
+          <div className="button-container">  
+          <button onClick={restartGame}>Play Again!</button>
           <button onClick={() => navigate("/")}>Go Back</button>
+          </div>
         </div>
       )}
     </div>
