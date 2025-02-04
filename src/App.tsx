@@ -1,7 +1,8 @@
-
-import { BrowserRouter as Routes, Route, useNavigate } from "react-router-dom";
+import React from 'react';
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Game from "./Game";
 import Dog from "./Dog";
+import './App.css';
 
 
 import './App.css'

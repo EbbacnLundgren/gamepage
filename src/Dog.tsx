@@ -29,33 +29,40 @@ const Dog: React.FC = () => {
 
   const generateOptions = (dogList: Dog[], roundIndex: number, breeds: Record<string, string[]>) => {
     if (dogList.length === 0) return;
-    
+  
     const correctBreed = dogList[roundIndex].breed;
-
     const [mainBreed] = correctBreed.split("-");
-
     let similarBreeds: string[] = [];
-
-    const firstLetter = mainBreed.charAt(0).toUpperCase();
-
-    similarBreeds = Object.keys(breeds).filter( (b) => b.charAt(0).toUpperCase() === firstLetter && b !== mainBreed);
-
-    if(similarBreeds.length === 0) {
-        similarBreeds = dogList
-        .map((dog) => dog.breed)
-        .filter((b) => b !== correctBreed)
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 2); 
-
+  
+    // Find similar breeds
+    for (const breed in breeds) {
+      if (breed.includes(mainBreed) && breed !== correctBreed) {
+        similarBreeds.push(breed);
+      }
     }
-
-    let randomBreeds = similarBreeds
-      .filter((b) => b !== correctBreed)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 2); 
-
-    const allOptions = [...randomBreeds, correctBreed].sort(() => 0.5 - Math.random()); // Shuffle answers
-    setOptions(allOptions);
+  
+    // If not enough similar breeds, find breeds starting with the same letter
+    if (similarBreeds.length < 3) {
+      const firstLetter = mainBreed.charAt(0);
+      for (const breed in breeds) {
+        if (breed.startsWith(firstLetter) && breed !== correctBreed && !similarBreeds.includes(breed)) {
+          similarBreeds.push(breed);
+        }
+      }
+    }
+  
+    // Ensure we have exactly 3 options
+    while (similarBreeds.length > 3) {
+      similarBreeds.pop();
+    }
+  
+    // Add the correct breed to the options
+    similarBreeds.push(correctBreed);
+  
+    // Shuffle the options
+    similarBreeds = similarBreeds.sort(() => Math.random() - 0.5);
+  
+    setOptions(similarBreeds);
   };
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
