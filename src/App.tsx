@@ -12,10 +12,12 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <h1>Welcome to Ebba's Game Page</h1>
-      
+      <h1>Ebba's Game Page</h1>
+
+      <div className="button-container">
       <button onClick={() => navigate("/game")}>Guess the year of the song!</button>
       <button onClick={() => navigate("/dog")}>Guess the dog!</button>
+      </div>
     </div>
   );
 };

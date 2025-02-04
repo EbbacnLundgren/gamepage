@@ -160,6 +160,6 @@ const Dog: React.FC = () => {
 export default Dog;
 
 //visa alternativ som liknar varandra, eller börjar på samma bokstav
-//  inte så många alternativ, samt ändra färg på den knapp man trycker, timer, vissa box terrier istället för terrier box
+//inte så många alternativ, samt ändra färg på den knapp man trycker, timer, vissa box terrier istället för terrier box
 //att bilden alltid stannar där den är och att den inte flyttar sig bara för att bilden är liten
 //När man väljer fel --> visa grönt vilken som va den rätta eller ha som facit efter
