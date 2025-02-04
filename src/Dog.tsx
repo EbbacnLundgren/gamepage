@@ -16,7 +16,6 @@ const Dog: React.FC = () => {
   const [allBreeds, setAllBreeds] = useState<Record<string, string[]>>({});
   const [showCorrect, setShowCorrect] = useState(false);
   const [shake, setShake] = useState<string | null>(null);
-  const [shakeKey, setShakeKey] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,8 +76,7 @@ const Dog: React.FC = () => {
       } else {
         setShowCorrect(true);
         setShake(selectedBreed);
-        setShakeKey(prevKey => prevKey + 1);  
-        setTimeout(() => { setShake(null), 500});
+        setTimeout(() => {setShake(null), 500});
       }
 
       setTimeout(() => {
