@@ -88,27 +88,33 @@ body {
 }
 
 .dog-button {
-  padding: 12px;
+  padding: 14px;
   font-size: 1.2rem;
-  border-radius: 8px;
-  width: 200px;
+  border-radius: 12px;
+  width: 220px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  border: 2px solid black;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  text-transform: capitalize;
 }
 
 .dog-button:hover {
-  background-color: lightgray;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
 }
 
 .dog-button.correct {
-  background-color: green;
-  animation: pop 0.3s ease-in-out;
+  background: #4CAF50;
+  color: white;
 }
 
 .dog-button.wrong {
-  background-color: red;
-  animation: shake 0.3s ease-in-out;
+  background: #E74C3C;
+  color: white;
 }
 
 @keyframes pop {
