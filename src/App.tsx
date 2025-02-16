@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="game-page">
       <h1>Ebba's Game Page</h1>
 
       <div className="button-container">

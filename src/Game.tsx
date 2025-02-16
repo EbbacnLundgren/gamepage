@@ -5,7 +5,7 @@ const Game: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="game-page">
+        <div>
             <h1>Yearley</h1>
             <p>The game starts now! </p>
             <button onClick={() => navigate("/")}>Go Back</button>

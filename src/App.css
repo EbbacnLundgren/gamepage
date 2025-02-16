@@ -31,7 +31,7 @@ html, body {
 
 
 .front-page {
-  background: none !important;
+  background: linear-gradient(135deg, #8EC5FC, #E0C3FC);
   width: 100%;
   min-height: 100vh;
 }
