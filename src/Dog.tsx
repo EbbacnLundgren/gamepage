@@ -107,14 +107,13 @@ const Dog: React.FC = () => {
   });
 
   const restartGame = async () => {
-    // Spara den senaste poängen i sessionStorage
+
     setSessionScores((prevScores) => {
       const updatedScores = [...prevScores, score];
       sessionStorage.setItem("sessionScores", JSON.stringify(updatedScores));
       return updatedScores;
     });
 
-    // Återställ alla state-variabler
     setDogs([]);
     setCurrentRound(0);
     setScore(0);
@@ -123,7 +122,6 @@ const Dog: React.FC = () => {
     setShowCorrect(false);
     setIsDisabled(false);
 
-    // Ladda om spelet med nya hundar och raser
     const fetchedDogs = await fetchMultipleDogs(10);
     const breeds = await fetchAllBreeds();
 
