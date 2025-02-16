@@ -144,10 +144,10 @@ const Dog: React.FC = () => {
   if (dogs.length === 0) return <p>Loading game...</p>;
 
   return (
-    <div>
+    <div className="game-container"> {/* Lägg game-container runt hela spelet */}
       {!gameOver ? (
         <div>
-          <h1>Guess the dog!!🐶</h1>
+          <h1>GUESS THE DOG</h1>
           <div className="rounds">
             <p>Round {currentRound + 1} of 10</p>
           </div>
@@ -158,50 +158,51 @@ const Dog: React.FC = () => {
           />
           
           <div className="button-container">
-                {options.map((breed, index) => (
-                    <button 
-                    key={index} 
-                    onClick={() => handleGuess(breed)}
-                    disabled={isDisabled} 
-                    className={`dog-button 
-                        ${selectedOption === breed 
-                        ? breed === dogs[currentRound].breed 
-                            ? "correct" 
-                            : "wrong"
-                          : showCorrect && breed === dogs[currentRound].breed
-                            ? "correct"
-                          : ""} ${shake === breed ? "shake" : ""}`}
-                    >
-                    {breed}
-                </button>
-                
+            {options.map((breed, index) => (
+              <button 
+                key={index} 
+                onClick={() => handleGuess(breed)}
+                disabled={isDisabled} 
+                className={`dog-button 
+                  ${selectedOption === breed 
+                    ? breed === dogs[currentRound].breed 
+                      ? "correct" 
+                      : "wrong"
+                    : showCorrect && breed === dogs[currentRound].breed
+                      ? "correct"
+                    : ""} ${shake === breed ? "shake" : ""}`}
+              >
+                {breed}
+              </button>
             ))}
-            </div>
-            <div className="back-button">
-
-                <button onClick={() => navigate("/")}>Go Back</button>
-            </div>
+          </div>
+  
+          <div className="back-button">
+            <button onClick={() => navigate("/")}>Go Back</button>
+          </div>
         </div>
       ) : (
         <div className="doneplaying">
-            <h1>Thanks for playing!</h1>
+          <h1>Thanks for playing!</h1>
           <p>You got {score} out of 10!</p>
           <p>{getFeedbackMessage(score)}</p>
-
+  
           <h2>Previous Scores:</h2>
-            <ul>
-              {sessionScores.map((s, i) => (
-                <li key={i}>Game {i + 1}: {s} points</li>
-              ))}
-            </ul>
+          <ul>
+            {sessionScores.map((s, i) => (
+              <li key={i}>Game {i + 1}: {s} points</li>
+            ))}
+          </ul>
+  
           <div className="button-container">  
-          <button onClick={restartGame}>Play Again!</button>
-          <button onClick={() => navigate("/")}>Go Back</button>
+            <button onClick={restartGame}>Play Again!</button>
+            <button onClick={() => navigate("/")}>Go Back</button>
           </div>
         </div>
       )}
     </div>
   );
+  
 };
 
 export default Dog;
