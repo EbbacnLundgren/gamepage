@@ -83,7 +83,8 @@ const Dog: React.FC = () => {
         setShowCorrect(true);
         setShake(selectedBreed);
         wrongSound.play();
-        setTimeout(() => {setShake(null), 500});
+        setTimeout(() => setShake(null), 500);
+
       }
 
       setTimeout(() => {

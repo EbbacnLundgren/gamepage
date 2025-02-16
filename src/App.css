@@ -101,6 +101,30 @@ body {
   background-color: lightgray;
 }
 
+.dog-button.correct {
+  background-color: green;
+  animation: pop 0.3s ease-in-out;
+}
+
+.dog-button.wrong {
+  background-color: red;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
 .correct {
   background-color: green !important;
   color: white;
