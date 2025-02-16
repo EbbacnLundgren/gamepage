@@ -66,16 +66,23 @@ const Dog: React.FC = () => {
   };
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const correctSound = new Audio("/sounds/correct.mp3");
+  const wrongSound = new Audio("/sounds/wrong.mp3");
 
     const handleGuess = (selectedBreed: string) => {
+      if (isDisabled) return;
       console.log("handleGuess called with:", selectedBreed);
       setSelectedOption(selectedBreed); 
+      setIsDisabled(true);
 
       if (selectedBreed === dogs[currentRound].breed) {
         setScore(score + 1);
+        correctSound.play();
       } else {
         setShowCorrect(true);
         setShake(selectedBreed);
+        wrongSound.play();
         setTimeout(() => {setShake(null), 500});
       }
 
@@ -86,24 +93,44 @@ const Dog: React.FC = () => {
           generateOptions(dogs, nextRound, allBreeds);
           setSelectedOption(null);
           setShowCorrect(false);
+          setIsDisabled(false);
         } else {
           setGameOver(true);
         }
       }, 2000); 
     };
 
-  const restartGame = () => {
+  const [sessionScores, setSessionScores] = useState<number[]>(() => {
+    const savedScores = sessionStorage.getItem("sessionScores");
+    return savedScores ? JSON.parse(savedScores) : [];
+  });
+
+  const restartGame = async () => {
+    // Spara den senaste poängen i sessionStorage
+    setSessionScores((prevScores) => {
+      const updatedScores = [...prevScores, score];
+      sessionStorage.setItem("sessionScores", JSON.stringify(updatedScores));
+      return updatedScores;
+    });
+
+    // Återställ alla state-variabler
     setDogs([]);
     setCurrentRound(0);
     setScore(0);
     setGameOver(false);
-    const loadDogs = async () => {
-      const fetchedDogs = await fetchMultipleDogs(10);
-      setDogs(fetchedDogs);
-      generateOptions(fetchedDogs, 0, allBreeds);
-    };
-    loadDogs();
-  };
+    setSelectedOption(null);
+    setShowCorrect(false);
+    setIsDisabled(false);
+
+    // Ladda om spelet med nya hundar och raser
+    const fetchedDogs = await fetchMultipleDogs(10);
+    const breeds = await fetchAllBreeds();
+
+    setDogs(fetchedDogs);
+    setAllBreeds(breeds);
+    generateOptions(fetchedDogs, 0, breeds);
+};
+
 
   const getFeedbackMessage = (score: number): string => {
     if (score <= 3) {
@@ -136,6 +163,7 @@ const Dog: React.FC = () => {
                     <button 
                     key={index} 
                     onClick={() => handleGuess(breed)}
+                    disabled={isDisabled} 
                     className={`dog-button 
                         ${selectedOption === breed 
                         ? breed === dogs[currentRound].breed 
@@ -160,6 +188,13 @@ const Dog: React.FC = () => {
             <h1>Thanks for playing!</h1>
           <p>You got {score} out of 10!</p>
           <p>{getFeedbackMessage(score)}</p>
+
+          <h2>Previous Scores:</h2>
+            <ul>
+              {sessionScores.map((s, i) => (
+                <li key={i}>Game {i + 1}: {s} points</li>
+              ))}
+            </ul>
           <div className="button-container">  
           <button onClick={restartGame}>Play Again!</button>
           <button onClick={() => navigate("/")}>Go Back</button>
