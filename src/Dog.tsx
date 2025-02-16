@@ -144,7 +144,7 @@ const Dog: React.FC = () => {
   if (dogs.length === 0) return <p>Loading game...</p>;
 
   return (
-    <div className="game-container"> {/* Lägg game-container runt hela spelet */}
+    <div className="game-container"> 
       {!gameOver ? (
         <div>
           <h1>GUESS THE DOG</h1>
